@@ -1,5 +1,7 @@
 # Практика 6
 
+## Порядок выполнения
+
 В файле $HADOOP_HOME/etc/hadoop/mapred-site.xml добавить:
 
     <property>
@@ -46,3 +48,24 @@ limit 5;
 
     $HIVE_HOME/bin/beeline -n maden -u jdbc:hive2://localhost:10000 -f move_data.hql
 
+
+## Результат:
+
+    Loading data to table bigdata.userlog partition (userid=null, hvalue=null)
+         Time taken to load dynamic partitions: 8.088 seconds
+         Time taken for adding to write entity : 0.013 seconds
+    MapReduce Jobs Launched:
+    Stage-Stage-1: Map: 16  Reduce: 19   Cumulative CPU: 3760.73 sec   HDFS Read: 4651657312 HDFS Write: 1792370858 SUCCESS
+    Total MapReduce CPU Time Spent: 0 days 1 hours 2 minutes 40 seconds 730 msec
+
+Проверяем, что данные доступны в таблице:
+
+    $HIVE_HOME/bin/beeline -n maden -u jdbc:hive2://localhost:10000
+
+    use bigdata;
+    select * from userlog limit 10;
+
+![](select_userlog.png)
+
+## Сравнение объема данных:
+![](volumes.png)
